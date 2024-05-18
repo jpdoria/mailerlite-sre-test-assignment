@@ -9,11 +9,20 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: email-operator
-  namespace: default
 rules:
   - apiGroups: [""]
     resources: ["secrets", "events"]
     verbs: ["get", "list", "watch", "create"]
+  - apiGroups: [""]
+    resources: [namespaces]
+    verbs: [list, watch]
+  - apiGroups: [apiextensions.k8s.io]
+    resources: [customresourcedefinitions]
+    verbs: [list, watch]
+  - apiGroups:
+      [admissionregistration.k8s.io/v1, admissionregistration.k8s.io/v1beta1]
+    resources: [validatingwebhookconfigurations, mutatingwebhookconfigurations]
+    verbs: [create, patch]
   - apiGroups: ["konsol.sh"]
     resources: ["emails", "emailsenderconfigs"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
@@ -22,7 +31,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: email-operator
-  namespace: default
 subjects:
   - kind: ServiceAccount
     name: email-operator
