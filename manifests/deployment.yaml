@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-operator
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: email-operator
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: email-operator
+    spec:
+      serviceAccountName: email-operator
+      containers:
+        - name: email-operator
+          image: jpdoria/email-operator:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "0.8"
+              memory: "256Mi"
