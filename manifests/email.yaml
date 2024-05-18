@@ -15,6 +15,6 @@ metadata:
   namespace: default
 spec:
   senderConfigRef: "test-email-sender-config"
-  recipientEmail: "jp@konsol.sh"
+  recipientEmail: "root@konsol.sh"
   subject: "hello world!"
   body: "foo bar baz xyz!"
